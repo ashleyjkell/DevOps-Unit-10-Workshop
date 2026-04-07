@@ -26,7 +26,7 @@ def process_orders(app):
         payload = {
             "product": order.product,
             "customer": order.customer,
-            "date": order.date_placed.replace(tzinfo=timezone.utc).isoformat(),
+            "date": order.date_placed.isoformat() + "Z",
         }
 
         response = requests.post(
