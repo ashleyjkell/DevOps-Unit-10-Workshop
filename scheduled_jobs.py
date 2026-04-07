@@ -2,6 +2,7 @@ from data.database import save_order, get_all_orders
 from products import create_product_download
 from apscheduler.schedulers.background import BackgroundScheduler
 import requests
+import datetime
 
 
 def initialise_scheduled_jobs(app):
@@ -26,7 +27,7 @@ def process_orders(app):
         payload = {
             "product": order.product,
             "customer": order.customer,
-            "date": order.date_placed.isoformat() + "Z",
+            "date": order.date_placed.replace(tzinfo=datetime.timezone.utc).isoformat(),
         }
 
         response = requests.post(
