@@ -2,8 +2,6 @@ from data.database import save_order, get_all_orders
 from products import create_product_download
 from apscheduler.schedulers.background import BackgroundScheduler
 import requests
-import datetime
-
 
 def initialise_scheduled_jobs(app):
     scheduler = BackgroundScheduler()
@@ -17,6 +15,7 @@ def initialise_scheduled_jobs(app):
 
 
 def process_orders(app):
+    from datetime import timezone
     with app.app_context():
         orders = get_queue_of_orders_to_process()
         if len(orders) == 0:
